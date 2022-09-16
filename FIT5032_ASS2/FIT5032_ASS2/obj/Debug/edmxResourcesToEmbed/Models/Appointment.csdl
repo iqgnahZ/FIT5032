@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PatientSet" EntityType="Model.Patient" />
+    <EntitySet Name="DoctorSet" EntityType="Model.Doctor" />
+    <EntitySet Name="BookingSet" EntityType="Model.Booking" />
+    <EntitySet Name="AdministratorSet" EntityType="Model.Administrator" />
+    <AssociationSet Name="PatientBooking" Association="Model.PatientBooking">
+      <End Role="Patient" EntitySet="PatientSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorBooking" Association="Model.DoctorBooking">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="AdministratorBooking" Association="Model.AdministratorBooking">
+      <End Role="Administrator" EntitySet="AdministratorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="Age" Type="String" Nullable="false" />
+    <Property Name="Gender" Type="String" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.PatientBooking" FromRole="Patient" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="YearsOfService" Type="String" Nullable="false" />
+    <Property Name="Category" Type="String" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.DoctorBooking" FromRole="Doctor" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" />
+    <Property Name="Price" Type="String" Nullable="false" />
+    <Property Name="Available" Type="String" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="Model.PatientBooking" FromRole="Booking" ToRole="Patient" />
+    <Property Name="PatientPatientId" Type="String" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Model.DoctorBooking" FromRole="Booking" ToRole="Doctor" />
+    <Property Name="DoctorDoctorId" Type="String" Nullable="false" />
+    <NavigationProperty Name="Administrator" Relationship="Model.AdministratorBooking" FromRole="Booking" ToRole="Administrator" />
+    <Property Name="AdministratorAdministratorId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="AdministratorId" />
+    </Key>
+    <Property Name="AdministratorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Booking" Relationship="Model.AdministratorBooking" FromRole="Administrator" ToRole="Booking" />
+  </EntityType>
+  <Association Name="PatientBooking">
+    <End Type="Model.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientPatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorBooking">
+    <End Type="Model.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorDoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdministratorBooking">
+    <End Type="Model.Administrator" Role="Administrator" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrator">
+        <PropertyRef Name="AdministratorId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="AdministratorAdministratorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
