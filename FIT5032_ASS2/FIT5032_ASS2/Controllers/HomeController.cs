@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FIT5032_Week08A.Models;
+using FIT5032_Week08A.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,8 @@ namespace FIT5032_ASS2.Controllers
     {
         public ActionResult Index()
         {
+            //EmailSender es = new EmailSender();
+            //es.RegisterAPIKey();
             return View();
         }
 
@@ -23,6 +27,41 @@ namespace FIT5032_ASS2.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Send_Email()
+        {
+            return View(new SendEmailViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult Send_Email(SendEmailViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    String toEmail = model.ToEmail;
+                    String subject = model.Subject;
+                    String contents = model.Contents;
+                    HttpPostedFileBase attachment = model.Attachment;
+
+                    EmailSender es = new EmailSender();
+                    es.Send(toEmail, subject, contents, attachment);
+
+                    ViewBag.Result = "Email has been send.";
+
+                    ModelState.Clear();
+
+                    return View(new SendEmailViewModel());
+                }
+                catch
+                {
+                    return View();
+                }
+            }
 
             return View();
         }

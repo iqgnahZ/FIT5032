@@ -19,6 +19,9 @@ namespace FIT5032_ASS2.Controllers
         [Authorize(Roles ="Patient")]
         public ActionResult Index()
         {
+            // get user email
+            String username = User.Identity.Name;
+            String userId = User.Identity.GetUserId();
             return View(db.PatientSet.ToList());
         }
 
