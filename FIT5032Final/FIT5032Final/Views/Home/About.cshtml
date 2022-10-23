@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<div id="map"></div>
+
+<style>
+    #map {
+        height:500px;
+    }
+</style>
+
+
+
+@section Scripts {
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    @Scripts.Render("~/bundles/map")
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjZcahSM9X116b6PFE7FXoV43qLGJcQnE&callback=initMap&v=weekly"
+        defer></script>
+
+}

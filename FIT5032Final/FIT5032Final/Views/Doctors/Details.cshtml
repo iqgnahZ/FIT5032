@@ -1,0 +1,88 @@
+﻿@model FIT5032Final.Models.Doctor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>@Html.DisplayNameFor(model => model.AvgRating)</dt>
+        <dd>@Html.DisplayFor(model => model.AvgRating)</dd>
+
+    </dl>
+</div>
+
+
+@if (User.IsInRole("Patient"))
+{
+    using (Html.BeginForm("Rate", "Doctors", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model=>model.DoctorId)
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="Rate" class="control-label col-md-2">Rate</label>
+        <div class="rate">
+            <input type="radio" id="star5" name="Rate" value="5" />
+            <label for="star5" title="text">5</label>
+            <input type="radio" id="star4" name="Rate" value="4" />
+            <label for="star4" title="text">4</label>
+            <input type="radio" id="star3" name="Rate" value="3" />
+            <label for="star3" title="text">3</label>
+            <input type="radio" id="star2" name="Rate" value="2" />
+            <label for="star2" title="text">2</label>
+            <input type="radio" id="star1" name="Rate" value="1" />
+            <label for="star1" title="text">1</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Comment" class="control-label col-md-2">Comment</label>
+        <textarea id="Comment" name="Comment" rows="4" cols="50" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+    }
+}
+
+<div>
+    <h4>Patient Rating</h4>
+    @foreach (var rate in Model.Ratings)
+    {
+        <dl class="dl-horizontal">
+            <dt>Rate</dt>
+            <dd>@rate.Rate</dd>
+            <dt>Comment</dt>
+            <dd>@rate.Comment</dd>
+        </dl>
+    }
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

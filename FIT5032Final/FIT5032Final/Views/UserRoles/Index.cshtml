@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Roles</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div>
+        @Html.ActionLink("Create New Role |", "Create")
+        @Html.ActionLink("Add Role |", "AddRole")
+        @Html.ActionLink("Manage Role", "GetRole")
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>Role Name</th>
+        <th>Options</th>
+    </tr>
+    @foreach (var role in Model)
+    {
+        <tr>
+            <td>@role.Name</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { roleName = role.Name }) |
+                @Html.ActionLink("Delete", "Delete", new { roleName = role.Name })
+            </td>
+        </tr>
+    }
+</table>

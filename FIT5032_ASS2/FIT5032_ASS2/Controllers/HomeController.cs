@@ -37,6 +37,7 @@ namespace FIT5032_ASS2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Patient")]
         public ActionResult Send_Email(SendEmailViewModel model)
         {
             if (ModelState.IsValid)

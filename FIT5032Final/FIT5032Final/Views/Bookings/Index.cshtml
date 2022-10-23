@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FIT5032Final.Models.Booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div id="calendar"></div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
+        </td>
+    </tr>
+}
+
+</table>
+
+@section scripts{
+    @Scripts.Render("~/bundles/fullcalendar")
+<script>
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/Bookings/GetBook", false);
+    xmlHttp.send();
+    var Bookings = JSON.parse(xmlHttp.responseText);
+    //console.log(Bookings);
+
+    var list = [];
+    for (var i = 0; i < Bookings.length; i++) {
+        list.push({
+            id: Bookings[i].BookingId,
+            title: Bookings[i].Title,
+            price: Bookings[i].Price,
+            start: moment(Bookings[i].Time)
+        })
+    }
+
+
+    generateCalendar(list);
+    </script>
+}

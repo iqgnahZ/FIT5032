@@ -4,98 +4,86 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="ModelStoreContainer">
-    <EntitySet Name="PatientSet" EntityType="Model.Store.PatientSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DoctorSet" EntityType="Model.Store.DoctorSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="BookingSet" EntityType="Model.Store.BookingSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AdministratorSet" EntityType="Model.Store.AdministratorSet" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="PatientBooking" Association="Model.Store.PatientBooking">
-      <End Role="Patient" EntitySet="PatientSet" />
-      <End Role="Booking" EntitySet="BookingSet" />
-    </AssociationSet>
-    <AssociationSet Name="DoctorBooking" Association="Model.Store.DoctorBooking">
-      <End Role="Doctor" EntitySet="DoctorSet" />
-      <End Role="Booking" EntitySet="BookingSet" />
-    </AssociationSet>
-    <AssociationSet Name="AdministratorBooking" Association="Model.Store.AdministratorBooking">
-      <End Role="Administrator" EntitySet="AdministratorSet" />
-      <End Role="Booking" EntitySet="BookingSet" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="PatientSet">
-    <Key>
-      <PropertyRef Name="PatientId" />
-    </Key>
-    <Property Name="PatientId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Age" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="DoctorSet">
-    <Key>
-      <PropertyRef Name="DoctorId" />
-    </Key>
-    <Property Name="DoctorId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="YearsOfService" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="BookingSet">
-    <Key>
-      <PropertyRef Name="BookingId" />
-    </Key>
-    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Available" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PatientPatientId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DoctorDoctorId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AdministratorAdministratorId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AdministratorSet">
-    <Key>
-      <PropertyRef Name="AdministratorId" />
-    </Key>
-    <Property Name="AdministratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-  </EntityType>
-  <Association Name="PatientBooking">
-    <End Role="Patient" Type="Model.Store.PatientSet" Multiplicity="1" />
-    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Patient">
-        <PropertyRef Name="PatientId" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="PatientPatientId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="DoctorBooking">
-    <End Role="Doctor" Type="Model.Store.DoctorSet" Multiplicity="1" />
-    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Doctor">
-        <PropertyRef Name="DoctorId" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="DoctorDoctorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="AdministratorBooking">
-    <End Role="Administrator" Type="Model.Store.AdministratorSet" Multiplicity="1" />
-    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Administrator">
-        <PropertyRef Name="AdministratorId" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="AdministratorAdministratorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdministratorSet">
+          <Key>
+            <PropertyRef Name="AdministratorId" />
+          </Key>
+          <Property Name="AdministratorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookingSet">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Available" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PatientPatientId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DoctorDoctorId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AdministratorAdministratorId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'aspnet-FIT5032_ASS2-20220916084159.dbo.DoctorSet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DoctorSet">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            
+            
+          </Key>
+          <Property Name="DoctorId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="YearsOfService" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'aspnet-FIT5032_ASS2-20220916084159.dbo.PatientSet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PatientSet">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Age" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdministratorBooking">
+          <End Role="AdministratorSet" Type="Self.AdministratorSet" Multiplicity="1" />
+          <End Role="BookingSet" Type="Self.BookingSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdministratorSet">
+              <PropertyRef Name="AdministratorId" />
+            </Principal>
+            <Dependent Role="BookingSet">
+              <PropertyRef Name="AdministratorAdministratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="AdministratorSet" EntityType="Self.AdministratorSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingSet" EntityType="Self.BookingSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorSet" EntityType="Self.DoctorSet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DoctorSet].[DoctorId] AS [DoctorId], 
+    [DoctorSet].[YearsOfService] AS [YearsOfService], 
+    [DoctorSet].[Category] AS [Category]
+    FROM [dbo].[DoctorSet] AS [DoctorSet]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientSet" EntityType="Self.PatientSet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PatientSet].[PatientId] AS [PatientId], 
+    [PatientSet].[FirstName] AS [FirstName], 
+    [PatientSet].[LastName] AS [LastName], 
+    [PatientSet].[Age] AS [Age], 
+    [PatientSet].[Gender] AS [Gender]
+    FROM [dbo].[PatientSet] AS [PatientSet]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AdministratorBooking" Association="Self.FK_AdministratorBooking">
+            <End Role="AdministratorSet" EntitySet="AdministratorSet" />
+            <End Role="BookingSet" EntitySet="BookingSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -121,20 +109,20 @@
           <Key>
             <PropertyRef Name="PatientId" />
           </Key>
-          <Property Name="PatientId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="FirstName" Type="String" Nullable="false" />
-          <Property Name="LastName" Type="String" Nullable="false" />
-          <Property Name="Age" Type="String" Nullable="false" />
-          <Property Name="Gender" Type="String" Nullable="false" />
+          <Property Name="PatientId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Age" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Booking" Relationship="Model.PatientBooking" FromRole="Patient" ToRole="Booking" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
             <PropertyRef Name="DoctorId" />
           </Key>
-          <Property Name="DoctorId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="YearsOfService" Type="String" Nullable="false" />
-          <Property Name="Category" Type="String" Nullable="false" />
+          <Property Name="DoctorId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="YearsOfService" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Booking" Relationship="Model.DoctorBooking" FromRole="Doctor" ToRole="Booking" />
         </EntityType>
         <EntityType Name="Booking">
@@ -142,13 +130,13 @@
             <PropertyRef Name="BookingId" />
           </Key>
           <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" />
-          <Property Name="Price" Type="String" Nullable="false" />
-          <Property Name="Available" Type="String" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Available" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Patient" Relationship="Model.PatientBooking" FromRole="Booking" ToRole="Patient" />
-          <Property Name="PatientPatientId" Type="String" Nullable="false" />
+          <Property Name="PatientPatientId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Doctor" Relationship="Model.DoctorBooking" FromRole="Booking" ToRole="Doctor" />
-          <Property Name="DoctorDoctorId" Type="String" Nullable="false" />
+          <Property Name="DoctorDoctorId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Administrator" Relationship="Model.AdministratorBooking" FromRole="Booking" ToRole="Administrator" />
           <Property Name="AdministratorAdministratorId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -164,10 +152,8 @@
           <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
             </Principal>
             <Dependent Role="Booking">
-              <PropertyRef Name="PatientPatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

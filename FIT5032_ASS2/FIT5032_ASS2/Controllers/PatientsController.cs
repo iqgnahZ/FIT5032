@@ -45,6 +45,8 @@ namespace FIT5032_ASS2.Controllers
         {
             Patient patient = new Patient();
             patient.PatientId = User.Identity.GetUserId();
+            db.PatientSet.Add(patient);
+            db.SaveChanges();
             return View(patient);
         }
 
